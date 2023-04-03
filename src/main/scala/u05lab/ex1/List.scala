@@ -7,6 +7,7 @@ import u05lab.ex1.List
 enum List[A]:
   case ::(h: A, t: List[A])
   case Nil()
+
   def ::(h: A): List[A] = List.::(h, this)
 
   def head: Option[A] = this match
@@ -59,7 +60,9 @@ enum List[A]:
   def reverse(): List[A] = foldLeft[List[A]](Nil())((l, e) => e :: l)
 
   /** EXERCISES */
-  def zipRight: List[(A, Int)] = ???
+  def zipRight: List[(A, Int)] =
+    val size = length - 1
+    foldRight(Nil())((i, s) => (i, s.head.fold(size)(_._2 - 1)) :: s)
 
   def partition(pred: A => Boolean): (List[A], List[A]) = ???
 
