@@ -64,7 +64,8 @@ enum List[A]:
     val size = length - 1
     foldRight(Nil())((i, s) => (i, s.head.fold(size)(_._2 - 1)) :: s)
 
-  def partition(pred: A => Boolean): (List[A], List[A]) = ???
+  def partition(pred: A => Boolean): (List[A], List[A]) =
+    foldRight(Nil(), Nil())((i, s) => if pred(i) then (i :: s._1, s._2) else (s._1, i :: s._2))
 
   def span(pred: A => Boolean): (List[A], List[A]) = ???
 
