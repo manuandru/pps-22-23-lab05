@@ -13,8 +13,8 @@ class ListTest {
     assertEquals(List((10, 0), (20, 1), (30, 2)), list.zipRight)
 
   @Test def testFoldLeftRight(): Unit =
-    assertEquals(0, list.foldLeftRight(0)(_ - _)(_ + _))
-    assertEquals(-40, list.foldLeftRight(0)(_ + _)(_ - _))
+    assertEquals(0, list.foldLeftRight(0)(a => a)(_ - _)((a, _, c) => a + c))
+    assertEquals(-40, list.foldLeftRight(0)(a => a)(_ + _)((a, _, c) => a - c))
 
   @Test def testPartition(): Unit =
     assertEquals((Nil(), Nil()), Nil().partition(_ => true))
