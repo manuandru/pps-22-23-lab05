@@ -64,6 +64,10 @@ enum List[A]:
     val size = length - 1
     foldRight(Nil())((i, s) => (i, s.head.fold(size)(_._2 - 1)) :: s)
 
+  def foldLeftRight[B](z: B)(leftOp: (B, A) => B)(rightOp: (A, B) => B): B = this match
+    case h :: t => rightOp(h, t.foldLeftRight(leftOp(z, h))(leftOp)(rightOp))
+    case _ => z
+
   def partition(pred: A => Boolean): (List[A], List[A]) =
     foldRight(Nil(), Nil())((i, s) => if pred(i) then (i :: s._1, s._2) else (s._1, i :: s._2))
 

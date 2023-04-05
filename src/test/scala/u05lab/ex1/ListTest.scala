@@ -12,6 +12,10 @@ class ListTest {
     assertEquals(Nil(), Nil().zipRight)
     assertEquals(List((10, 0), (20, 1), (30, 2)), list.zipRight)
 
+  @Test def testFoldLeftRight(): Unit =
+    assertEquals(0, list.foldLeftRight(0)(_ - _)(_ + _))
+    assertEquals(-40, list.foldLeftRight(0)(_ + _)(_ - _))
+
   @Test def testPartition(): Unit =
     assertEquals((Nil(), Nil()), Nil().partition(_ => true))
     assertEquals((List(30), List(10, 20)), list.partition(_ > 20))
