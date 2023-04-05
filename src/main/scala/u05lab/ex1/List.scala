@@ -68,6 +68,9 @@ enum List[A]:
     case h :: t => rightOp(h, z, t.foldLeftRight(leftOp(z, h))(f)(leftOp)(rightOp))
     case _ => f(z)
 
+    def zipRightDoubleFolding: List[(A, Int)] =
+      foldLeftRight(0)(_ => Nil())((s, _) => s + 1)((e, c, s) => (e, c) :: s)
+
   def partition(pred: A => Boolean): (List[A], List[A]) =
     foldRight(Nil(), Nil())((i, s) => if pred(i) then (i :: s._1, s._2) else (s._1, i :: s._2))
 
