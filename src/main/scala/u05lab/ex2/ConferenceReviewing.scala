@@ -1,5 +1,7 @@
 package u05lab.ex2
 
+import u05lab.ex2.Question.FINAL
+
 trait ConferenceReviewing:
 
   /**
@@ -77,7 +79,9 @@ object ConferenceReviewing:
     override def orderedScores(article: Int, question: Question): List[Int] =
       results(article).map(_(question)).sorted
 
-    override def averageFinalScore(article: Int): Double = ???
+    override def averageFinalScore(article: Int): Double =
+      val finalScores = results(article).map(_(FINAL))
+      finalScores.sum / finalScores.length.toDouble
 
     override def acceptedArticles: Set[Int] = ???
 
