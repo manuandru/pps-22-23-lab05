@@ -16,9 +16,9 @@ class ListTest:
     assertEquals(0, list.foldLeftRight(0)(a => a)(_ - _)((a, _, c) => a + c))
     assertEquals(-40, list.foldLeftRight(0)(a => a)(_ + _)((a, _, c) => a - c))
 
-  @Test def testZipRightWithDoubleFolding(): Unit =
-    assertEquals(Nil(), Nil().zipRightDoubleFolding)
-    assertEquals(List((10, 0), (20, 1), (30, 2)), list.zipRightDoubleFolding)
+  @Test def testZipRightWithFoldLeftRight(): Unit =
+    assertEquals(Nil(), Nil().zipRightWithFoldLeftRight)
+    assertEquals(List((10, 0), (20, 1), (30, 2)), list.zipRightWithFoldLeftRight)
 
   @Test def testPartition(): Unit =
     assertEquals((Nil(), Nil()), Nil().partition(_ => true))
