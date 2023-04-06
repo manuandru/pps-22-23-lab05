@@ -27,6 +27,7 @@ class ListTest:
   @Test def testSpan(): Unit =
     assertEquals((Nil(), Nil()), Nil().span(_ => true))
     assertEquals((List(10), List(20, 30)), list.span(_ == 20))
+    assertEquals((List(10, 20, 30), Nil()), list.span(_ == 40))
 
   @Test def testReduce(): Unit =
     assertThrows(UnsupportedOperationException().getClass, () => Nil().reduce((a, _) => a))

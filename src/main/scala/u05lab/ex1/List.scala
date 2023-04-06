@@ -74,12 +74,15 @@ enum List[A]:
   def partition(pred: A => Boolean): (List[A], List[A]) =
     foldRight(Nil(), Nil())((i, s) => if pred(i) then (i :: s._1, s._2) else (s._1, i :: s._2))
 
-  def span(pred: A => Boolean): (List[A], List[A]) = this match
-    case h :: _ if pred(h) => (Nil(), this)
+  def foldRightFrom[B](z: B)(f: (A, B) => B)(pred: A => Boolean): (B, List[A]) = this match
+    case h :: _ if pred(h) => (z, this)
     case h :: t =>
-      val spanned = t.span(pred)
-      (h :: spanned._1, spanned._2)
-    case _ => (Nil(), Nil())
+      val folded = t.foldRightFrom(z)(f)(pred)
+      (f(h, folded._1), folded._2)
+    case _ => (z, Nil())
+
+  def span(pred: A => Boolean): (List[A], List[A]) =
+    foldRightFrom(Nil[A]())((e, s) => e :: s)(pred)
 
   /** @throws UnsupportedOperationException if the list is empty */
   def reduce(op: (A, A) => A): A = this match
