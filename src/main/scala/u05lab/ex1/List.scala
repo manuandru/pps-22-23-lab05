@@ -92,6 +92,9 @@ enum List[A]:
   def takeRight(n: Int): List[A] =
     foldRight((Nil[A](), 0))((e, s) => if s._2 < n then (e :: s._1, s._2 + 1) else s)._1
 
+  def collect[B](pf: PartialFunction[A, B]): List[B] =
+    filter(pf.isDefinedAt).map(pf)
+
 // Factories
 object List:
 

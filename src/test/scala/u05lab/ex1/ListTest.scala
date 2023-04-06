@@ -37,3 +37,6 @@ class ListTest:
   @Test def testTakeRight(): Unit =
     assertEquals(Nil(), list.takeRight(0))
     assertEquals(List(20, 30), list.takeRight(2))
+
+  @Test def testCollect(): Unit =
+    assertEquals(List("20", "30"), list.collect { case n if n > 10 => s"$n" })
