@@ -59,7 +59,7 @@ class ConferenceReviewingTest:
 
   @Test def optionalTestAverageWeightedFinalScore(): Unit =
     // l'articolo 1 ha media pesata finale pari a (4.8+5.4)/2 = 5,1, con scarto massimo 0.01
-    assertEquals((4.8 + 5.4) / 2, cr.averageWeightedFinalScoreMap(1), 0.01);
+    assertEquals((4.8 + 5.4) / 2, cr.averageWeightedFinalScoreMap(1), 0.01)
     // e simile per gli altri
     assertEquals((9.0 + 6.0) / 2, cr.averageWeightedFinalScoreMap(2), 0.01)
     assertEquals((0.9 + 1.6) / 2, cr.averageWeightedFinalScoreMap(3), 0.01)

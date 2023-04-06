@@ -59,9 +59,23 @@ object ConferenceReviewing:
   def apply(): ConferenceReviewing = ConferenceReviewingImpl()
 
   private class ConferenceReviewingImpl extends ConferenceReviewing:
-    override def loadReview(article: Int, relevance: Int, significance: Int, confidence: Int, fin: Int): Unit = ???
 
-    override def orderedScores(article: Int, question: Question): List[Int] = ???
+    private var results: Map[Int, List[Map[Question, Int]]] = Map()
+
+    override def loadReview(article: Int, scores: Map[Question, Int]): Unit =
+      val reviews = results.getOrElse(article, Nil)
+      results = results + (article -> (scores :: reviews))
+
+    override def loadReview(article: Int, relevance: Int, significance: Int, confidence: Int, fin: Int): Unit =
+      loadReview(article, Map(
+        Question.RELEVANCE -> relevance,
+        Question.SIGNIFICANCE -> significance,
+        Question.CONFIDENCE -> confidence,
+        Question.FINAL -> fin
+      ))
+
+    override def orderedScores(article: Int, question: Question): List[Int] =
+      results(article).map(_(question)).sorted
 
     override def averageFinalScore(article: Int): Double = ???
 
@@ -71,7 +85,6 @@ object ConferenceReviewing:
 
     override def averageWeightedFinalScoreMap: Map[Int, Double] = ???
 
-    override def loadReview(article: Int, scores: Map[Question, Int]): Unit = ???
 
 
 
