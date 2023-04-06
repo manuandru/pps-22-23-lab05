@@ -33,3 +33,7 @@ class ListTest:
     assertThrows(UnsupportedOperationException().getClass, () => Nil().reduce((a, _) => a))
     assertEquals(10, List(10).reduce(_ + _))
     assertEquals(60, list.reduce(_ + _))
+
+  @Test def testTakeRight(): Unit =
+    assertEquals(Nil(), list.takeRight(0))
+    assertEquals(List(20, 30), list.takeRight(2))

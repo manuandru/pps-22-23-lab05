@@ -89,7 +89,8 @@ enum List[A]:
     case Nil() => throw UnsupportedOperationException()
     case h :: t => t.foldLeft(h)(op)
 
-  def takeRight(n: Int): List[A] = ???
+  def takeRight(n: Int): List[A] =
+    foldRight((Nil[A](), 0))((e, s) => if s._2 < n then (e :: s._1, s._2 + 1) else s)._1
 
 // Factories
 object List:
