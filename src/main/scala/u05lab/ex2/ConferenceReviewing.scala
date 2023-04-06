@@ -91,7 +91,9 @@ object ConferenceReviewing:
         .filter((_, s) => s.exists(_(RELEVANCE) >= minRelevance))
         .keySet
 
-    override def sortedAcceptedArticles: List[(Int, Double)] = ???
+    override def sortedAcceptedArticles: List[(Int, Double)] =
+      val acceptedArticle = acceptedArticles
+      results.collect{ case (k, _) if acceptedArticle.contains(k) => (k, averageFinalScore(k)) }.toList.sortWith(_._2 < _._2)
 
     override def averageWeightedFinalScoreMap: Map[Int, Double] = ???
 
