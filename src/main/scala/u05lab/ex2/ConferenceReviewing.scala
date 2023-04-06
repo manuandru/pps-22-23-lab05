@@ -1,6 +1,6 @@
 package u05lab.ex2
 
-import u05lab.ex2.Question.{FINAL, RELEVANCE}
+import u05lab.ex2.Question.{CONFIDENCE, FINAL, RELEVANCE}
 
 trait ConferenceReviewing:
 
@@ -93,10 +93,10 @@ object ConferenceReviewing:
 
     override def sortedAcceptedArticles: List[(Int, Double)] =
       val acceptedArticle = acceptedArticles
-      results.collect{ case (k, _) if acceptedArticle.contains(k) => (k, averageFinalScore(k)) }.toList.sortWith(_._2 < _._2)
+      results.collect { case (k, _) if acceptedArticle.contains(k) => (k, averageFinalScore(k)) }.toList.sortWith(_._2 < _._2)
 
-    override def averageWeightedFinalScoreMap: Map[Int, Double] = ???
+    private def averageWeightedFinalScore(scores: List[Map[Question, Int]]): Double =
+      scores.foldLeft(0.0)((s, m) => s + m(CONFIDENCE) * m(FINAL) / 10.0) / scores.length.toDouble
 
-
-
-
+    override def averageWeightedFinalScoreMap: Map[Int, Double] =
+      results.map((a, s) => a -> averageWeightedFinalScore(s))
