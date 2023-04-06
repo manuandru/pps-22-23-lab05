@@ -1,6 +1,6 @@
 package u05lab.ex2
 
-import u05lab.ex2.Question.FINAL
+import u05lab.ex2.Question.{FINAL, RELEVANCE}
 
 trait ConferenceReviewing:
 
@@ -83,7 +83,13 @@ object ConferenceReviewing:
       val finalScores = results(article).map(_(FINAL))
       finalScores.sum / finalScores.length.toDouble
 
-    override def acceptedArticles: Set[Int] = ???
+    override def acceptedArticles: Set[Int] =
+      val minAvg = 5
+      val minRelevance = 8
+      results
+        .filter((a, _) => averageFinalScore(a) > minAvg)
+        .filter((_, s) => s.exists(_(RELEVANCE) >= minRelevance))
+        .keySet
 
     override def sortedAcceptedArticles: List[(Int, Double)] = ???
 
