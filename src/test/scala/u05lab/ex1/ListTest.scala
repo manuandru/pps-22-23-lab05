@@ -1,10 +1,10 @@
 package u05lab.ex1
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert.{assertEquals, assertThrows}
 import org.junit.Test
 import u05lab.ex1.List.{::, Nil}
 
-class ListTest {
+class ListTest:
 
   val list: List[Int] = 10 :: 20 :: 30 :: Nil()
 
@@ -24,4 +24,7 @@ class ListTest {
     assertEquals((Nil(), Nil()), Nil().partition(_ => true))
     assertEquals((List(30), List(10, 20)), list.partition(_ > 20))
 
-}
+  @Test def testReduce(): Unit =
+    assertThrows(UnsupportedOperationException().getClass, () => Nil().reduce((a, _) => a))
+    assertEquals(10, List(10).reduce(_ + _))
+    assertEquals(60, list.reduce(_ + _))

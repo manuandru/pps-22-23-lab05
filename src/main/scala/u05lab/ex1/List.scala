@@ -77,7 +77,9 @@ enum List[A]:
   def span(pred: A => Boolean): (List[A], List[A]) = ???
 
   /** @throws UnsupportedOperationException if the list is empty */
-  def reduce(op: (A, A) => A): A = ???
+  def reduce(op: (A, A) => A): A = this match
+    case Nil() => throw UnsupportedOperationException()
+    case h :: t => t.foldLeft(h)(op)
 
   def takeRight(n: Int): List[A] = ???
 
