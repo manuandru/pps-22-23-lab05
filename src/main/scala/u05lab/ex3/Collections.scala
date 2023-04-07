@@ -43,11 +43,26 @@ import PerformanceUtils.*
 
 
 /* Sets */
-@main def checkSetPerformance(): Unit = ???
+@main def checkSetPerformance(): Unit =
+  var immutableSet = Set.from(1 to 10_000_000)
+  val mutableSet = scala.collection.mutable.Set.from(1 to 10_000_000)
+
+  assert(
+    measure("immutable set")(() => immutableSet = immutableSet.filter(_ > 5_000_000))
+      >
+      measure("mutable set")(() => mutableSet.filterInPlace(_ > 5_000_000))
+  )
 
 /* Maps */
-@main def checkMapPerformance(): Unit = ???
+@main def checkMapPerformance(): Unit =
+  var immutableMap = Map.from(for i <- 1 to 10_000_000 yield i -> i)
+  val mutableMap = scala.collection.mutable.Map.from(for i <- 1 to 10_000_000 yield i -> i)
 
+  assert(
+    measure("immutable map")(() => immutableMap = immutableMap.map((k, v) => k -> (v + v)))
+      >
+      measure("mutable map")(() => mutableMap.mapValuesInPlace(_ + _))
+  )
 
 /* List vs Vector */
 @main def checkListVsVectorPerformance(): Unit =
